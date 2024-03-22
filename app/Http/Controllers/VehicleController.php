@@ -1,0 +1,18 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use App\Http\Resources\VehicleResource;
+use App\Models\Vehicle;
+use Illuminate\Http\Request;
+
+class VehicleController extends Controller
+{
+    
+    public function index()
+    {
+        $vehicles = Vehicle::orderBy('name', 'asc')->get(); 
+        return VehicleResource::collection($vehicles);
+    }
+    
+}
