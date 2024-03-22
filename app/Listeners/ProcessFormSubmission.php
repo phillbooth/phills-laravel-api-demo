@@ -31,7 +31,6 @@ class ProcessFormSubmission implements ShouldQueue
             $this->sendToWebhook($vehiclePricing);
         } catch (\Exception $e) {
             Log::error("Error handling form submission: " . $e->getMessage());
-            // Handle the error gracefully, e.g., log it or notify the system administrator
         }
     }
 
