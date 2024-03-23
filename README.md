@@ -1,3 +1,10 @@
+Comcept:
+
+Simple cart sales application form
+
+1. Dropdown list of Vehicles data comes from an API provided by the backend database
+2. Backend form validation for a detailed reason for the form not completing
+3. Simple Primary return success and a secondary webhook success using Laravel Event and Listner to caculate if the for user can afford the vehicle.
 Project Setup Instructions
 
 Laravel backend (backend-api) and an Express frontend (frontend-express).
