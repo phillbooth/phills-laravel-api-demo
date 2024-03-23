@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Events\FormSubmitted;
+use App\Models\FormSubmission;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Log;
 
 class FormSubmissionController extends Controller
 {
@@ -43,7 +45,15 @@ class FormSubmissionController extends Controller
                 return response()->json(['errors' => $validator->errors()], 422);
             }
 
-            
+           
+            // Save form submission data securely
+            $formSubmission = new FormSubmission();
+          
+            $formSubmission->fill($request->all());
+           
+            $formSubmission->save();
+           
+
             // !!note to get event running you will also need to run #php artisan queue:work in the main app directory along with #php artisan serve
             // Trigger event upon successful form submission
             event(new FormSubmitted($request->all()));
@@ -52,6 +62,7 @@ class FormSubmissionController extends Controller
             return response()->json(['message' => 'Form submitted successfully'], 200);
         } catch (\Exception $e) {
             // Catch any unexpected errors
+            Log::error($e);
             return response()->json(['error' => 'Server Error'], 500);
         }
     }

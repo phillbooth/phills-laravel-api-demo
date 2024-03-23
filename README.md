@@ -13,7 +13,7 @@ Initial Setup:
 5. Run 'php artisan migrate' to run database migrations.
 6. Run 'php artisan db:seed' to seed your database with initial data (if applicable).
 7. Run 'php artisan serve' to start the Laravel development server.
-8. 
+8. Optionally Run 'php artisan queue:work' along side php artisan serve to start the laravel queue
 
 As a note localhost in the .env should be set to http://localhost:8000
 

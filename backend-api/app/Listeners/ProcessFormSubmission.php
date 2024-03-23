@@ -21,13 +21,10 @@ class ProcessFormSubmission implements ShouldQueue
     {
         try {
             
-            Log::info("A webhook event has occured");
-            Log::info("Processing form submission...");
-
             $formData = $event->formData;
-            Log::info($formData);
+        
             $vehiclePricing = $this->queryVehiclePricing($formData);
-            Log::info($vehiclePricing);
+        
             $this->sendToWebhook($vehiclePricing);
         } catch (\Exception $e) {
             Log::error("Error handling form submission: " . $e->getMessage());
@@ -36,15 +33,13 @@ class ProcessFormSubmission implements ShouldQueue
 
     private function queryVehiclePricing($formData)
     {
-        Log::info("ProcessFormSubmission@queryVehiclePricing");
-        Log::info($formData);
+ 
         return \App\Models\VehiclePricing::where('vehicle_id', $formData['vehicle_id'])->get();
     }
 
     private function sendToWebhook($data)
     {
-        Log::info("ProcessFormSubmission@sendToWebhook");
-        Log::info($data);
+
 
         Http::post('http://localhost:3001/webhook', [
             'data' => $data,

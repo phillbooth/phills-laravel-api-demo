@@ -3,7 +3,8 @@
 # Dependency directories
 **/node_modules/
 **/vendor/
-
+node_modules
+/node_modules
 # Logs
 logs
 *.log

@@ -8,7 +8,7 @@ class CreateVehiclePricingTable extends Migration
 {
     public function up()
     {
-        Schema::create('vehicle_pricing', function (Blueprint $table) {
+        Schema::create('vehicle_pricings', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('vehicle_id');
             $table->decimal('minimum_purchase_amount', 10, 2);
@@ -20,6 +20,6 @@ class CreateVehiclePricingTable extends Migration
 
     public function down()
     {
-        Schema::dropIfExists('vehicle_pricing');
+        Schema::dropIfExists('vehicle_pricings');
     }
 }
