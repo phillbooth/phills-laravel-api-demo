@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Car Sale Form</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</head>
+
+<body>
+    <div class="container mt-5">
+        <h2>Car Sale Inquiry Form</h2>
+        <form id="carSaleForm">
+            <div class="form-group">
+                <label for="fullName">Full Name:</label>
+                <input type="text" class="form-control" id="fullName" name="full_name">
+            </div>
+            <div class="form-group">
+                <label for="email">Email:</label>
+                <input type="email" class="form-control" id="email" name="email">
+            </div>
+            <div class="form-group">
+                <label for="phoneNumber">Phone Number:</label>
+                <input type="text" class="form-control" id="phoneNumber" name="phone_number">
+            </div>
+            <div class="form-group">
+                <label for="vehicleSelect">Choose a Vehicle:</label>
+                <select class="form-control" id="vehicleSelect" name="vehicle_id"></select>
+            </div>
+            
+            <div class="form-group">
+                <label>Driving Licence Type:</label>
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="license_type" id="fullUk" value="Full UK">
+                    <label class="form-check-label" for="fullUk">Full UK Driving Licence</label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="license_type" id="ukWithPoints"
+                        value="UK with Points">
+                    <label class="form-check-label" for="ukWithPoints">UK Driving Licence with Points</label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="license_type" id="nonUk" value="Non UK">
+                    <label class="form-check-label" for="nonUk">A non-UK Driving Licence</label>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="yearlyIncome">Yearly Income:</label>
+                <input type="number" class="form-control" id="yearlyIncome" name="yearly_income" min="0">
+            </div>
+
+            <div id="validationErrors" class="alert alert-danger" style="display:none;">
+                <ul id="errorMessages"></ul>
+            </div>
+
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+
+        <div class="log-area mt-3">
+            <label for="log">Log:</label>
+            <textarea class="form-control" id="log" rows="5" readonly></textarea>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            fetch('http://localhost:8000/api/vehicles')
+                .then(response => response.json())
+                .then(data => {
+                    const vehicles = data.data;
+                    const select = document.querySelector('#vehicleSelect');
+                    vehicles.forEach(vehicle => {
+                        const option = new Option(vehicle.name, vehicle.id);
+                        select.add(option);
+                    });
+                })
+                .catch(error => {
+                    console.error('Error fetching vehicles:', error);
+                });
+
+
+            document.getElementById('carSaleForm').addEventListener('submit', function (event) {
+                event.preventDefault();
+
+                const formData = {
+                    full_name: document.querySelector('#fullName').value,
+                    email: document.querySelector('#email').value,
+                    phone_number: document.querySelector('#phoneNumber').value,
+                    vehicle_id: document.querySelector('#vehicleSelect').value,
+                    license_type: document.querySelector('input[name="license_type"]:checked').value,
+                    yearly_income: document.querySelector('#yearlyIncome').value, // Add this line
+                };
+
+
+                fetch('http://localhost:8000/api/form-submission', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(formData)
+                })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.errors) {
+                            const errorMessages = document.getElementById('errorMessages');
+                            errorMessages.innerHTML = ''; // Clear previous messages
+                            Object.keys(data.errors).forEach(function (key) {
+                                const newLi = document.createElement('li');
+                                newLi.innerText = `${data.errors[key].join(', ')}`;
+                                errorMessages.appendChild(newLi);
+                            });
+                            document.getElementById('validationErrors').style.display = 'block';
+                        } else {
+                            document.getElementById('validationErrors').style.display = 'none';
+                            alert('Form submitted successfully!');
+                            // Reset the form or redirect the user
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                    });
+            });
+
+
+        });
+    </script>
+</body>
+
+</html>
