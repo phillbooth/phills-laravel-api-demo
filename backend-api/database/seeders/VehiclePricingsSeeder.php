@@ -2,9 +2,9 @@
 
 namespace Database\Seeders;
 
+use App\Models\Vehicle;
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\DB;
-use App\Models\Vehicle; // Import the Vehicle model
+use Illuminate\Support\Facades\DB; // Import the Vehicle model
 
 class VehiclePricingsSeeder extends Seeder
 {
@@ -28,9 +28,9 @@ class VehiclePricingsSeeder extends Seeder
             ['Mini', 22000],
             ['Rolls-Royce', 350000],
             ['Rover', 15000],
-            ['Vauxhall', 17000]
+            ['Vauxhall', 17000],
         ];
-        
+
         foreach ($vehiclePricingData as $data) {
             $vehicle = Vehicle::where('name', $data[0])->first();
             if ($vehicle) {

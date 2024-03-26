@@ -2,7 +2,6 @@
 
 namespace App\Http\Resources;
 
-use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class VehiclePricingResource extends JsonResource
@@ -16,9 +15,8 @@ class VehiclePricingResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'name' => $this->vehicle->name, 
+            'name' => $this->vehicle->name,
             'minimum_purchase_amount' => $this->minimum_purchase_amount,
         ];
     }
-    
 }

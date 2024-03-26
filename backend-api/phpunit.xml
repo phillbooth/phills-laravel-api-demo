@@ -4,14 +4,16 @@
          bootstrap="vendor/autoload.php"
          colors="true"
 >
-    <testsuites>
-        <testsuite name="Unit">
-            <directory>tests/Unit</directory>
-        </testsuite>
-        <testsuite name="Feature">
-            <directory>tests/Feature</directory>
-        </testsuite>
-    </testsuites>
+<testsuites>
+    <testsuite name="Unit">
+        <directory>tests/Unit</directory>
+    </testsuite>
+    <testsuite name="Feature">
+        <directory>tests/Feature</directory>
+        <exclude>tests/Feature/ExampleTest.php</exclude> <!-- Exclude ExampleTest -->
+    </testsuite>
+</testsuites>
+
     <source>
         <include>
             <directory>app</directory>

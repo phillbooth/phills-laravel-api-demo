@@ -11,5 +11,4 @@ class AppServiceProvider extends ServiceProvider
             ProcessFormSubmission::class,
         ],
     ];
-    
 }

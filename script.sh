@@ -12,4 +12,4 @@ php artisan queue:work &
 
 # Start the Express app in the frontend-express folder
 cd ../frontend-express
-npm start
+node app.js

@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('name'); // Creates a column for vehicle names
             $table->timestamps(); // Creates `created_at` and `updated_at` columns
         });
-        
+
     }
 
     /**

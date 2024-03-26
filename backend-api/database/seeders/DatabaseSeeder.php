@@ -25,9 +25,5 @@ class DatabaseSeeder extends Seeder
             VehiclePricingSeeder::class
         );
 
-        
     }
-
-  
-
 }

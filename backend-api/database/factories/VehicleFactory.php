@@ -20,5 +20,4 @@ class VehicleFactory extends Factory
             'name' => $this->faker->unique()->word, // Generate a unique vehicle name
         ];
     }
-    
 }
